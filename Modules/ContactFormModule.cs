@@ -22,10 +22,11 @@ namespace ContactForm.Microservice.Modules
 
         public async Task<IEnumerable<Entities.ContactForm>> GetAsync(byte LastCount)
         {
-            var contactFormQuery = context.Set<Entities.ContactForm>().AsQueryable();
+            var query = $"SELECT TOP {LastCount} * FROM ContactForm ORDER BY CreatedDate DESC";
 
-            var lstContactForm = await contactFormQuery.TakeLast(LastCount)
-                                                       .ToListAsync();
+            var lstContactForm = await context.Set<Entities.ContactForm>().FromSqlRaw(query)
+                                                                          .Include(x => x.ContactFormDetails)                                                                        
+                                                                          .ToListAsync();
 
             return lstContactForm;
         }

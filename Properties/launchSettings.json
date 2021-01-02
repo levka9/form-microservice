@@ -12,7 +12,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "api/ContactFrom/get?FromDate=",
+      "launchUrl": "api/ContactFrom/getLastN?LastCount=5",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
