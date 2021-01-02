@@ -23,7 +23,7 @@ namespace ContactForm.Microservice.Controllers
 
         [HttpGet]
         public async Task<IEnumerable<Entities.ContactForm>> Get([FromQuery] ContactFromGetRequest Request)
-        {
+        {            
             return await contactFormModule.GetAsync(Request);
         }
 

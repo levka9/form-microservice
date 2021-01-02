@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ContactForm.Microservice.Modules;
 using Newtonsoft.Json;
+using ContactForm.Microservice.Extensions;
 
 namespace ContactForm.Microservice
 {
@@ -48,7 +49,8 @@ namespace ContactForm.Microservice
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.ConfigureExceptionHandler();
+            
             app.UseHttpsRedirection();
 
             app.UseRouting();

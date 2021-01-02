@@ -10,7 +10,10 @@ namespace ContactForm.Microservice.Modules
 {
     public class ContactFormModule : IContactFormModule
     {
+        #region Properties
+        static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         ContactFormContext context;
+        #endregion
 
         public ContactFormModule(ContactFormContext Context)
         {
@@ -24,8 +27,7 @@ namespace ContactForm.Microservice.Modules
             var lstContactForm  = await contactFormQuery.Include(x => x.ContactFormDetails)
                                                         .Where(x => x.CreatedDate >= Request.FromDate &&
                                                                    (Request.ToDate == null || x.CreatedDate <= Request.ToDate))
-                                                        .ToListAsync();
-            
+                                                        .ToListAsync();            
             return lstContactForm;
         }
 
