@@ -20,6 +20,16 @@ namespace ContactForm.Microservice.Modules
             context = Context;
         }
 
+        public async Task<IEnumerable<Entities.ContactForm>> GetAsync(byte LastCount)
+        {
+            var contactFormQuery = context.Set<Entities.ContactForm>().AsQueryable();
+
+            var lstContactForm = await contactFormQuery.TakeLast(LastCount)
+                                                       .ToListAsync();
+
+            return lstContactForm;
+        }
+
         public async Task<IEnumerable<Entities.ContactForm>> GetAsync(ContactFromGetRequest Request)
         {
             var contactFormQuery = context.Set<Entities.ContactForm>().AsQueryable();

@@ -29,7 +29,7 @@ namespace ContactForm.Microservice.Extensions
 
                     if (contextFeature != null)
                     {
-                        log.Error($"{ExceptionHelper.GetMessages(contextFeature.Error)}");
+                        log.Error($"{ExceptionHelper.GetMessages(contextFeature.Error, string.Empty, true)}");
 
                         await context.Response.WriteAsync(new ErrorDetails()
                         {

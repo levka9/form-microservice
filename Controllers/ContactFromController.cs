@@ -22,10 +22,17 @@ namespace ContactForm.Microservice.Controllers
         }
 
         [HttpGet]
+        public async Task<IEnumerable<Entities.ContactForm>> Get([FromQuery] byte LastCount)
+        {
+            return await contactFormModule.GetAsync(LastCount);
+        }
+
+        [HttpGet]
         public async Task<IEnumerable<Entities.ContactForm>> Get([FromQuery] ContactFromGetRequest Request)
-        {            
+        {
             return await contactFormModule.GetAsync(Request);
         }
+                
 
         [HttpPost]
         public async Task<IActionResult> Send([FromBody]ContactFormSendRequest Request)
