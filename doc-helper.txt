@@ -1,0 +1,6 @@
+﻿﻿-- Update Entities DB Rirst
+Scaffold-DbContext "Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\DotNet\ContactForm.Microservice\LocalDB\ContactForm.mdf;Integrated Security=True;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -Context ContactFormContext -ContextDir Entities\Context -OutputDir Entities -Project ContactForm.Microservice -force
+
+-- Code First 
+run from PM: add-migration wizdi_preprod -Context YavneBonusContext
+run from PM: update-database –verbose

@@ -1,0 +1,49 @@
+﻿1. Add contact form
+
+Method: Post
+
+Url: https://localhost:44324/api/ContactFrom/Send
+
+Body:
+{
+  "applicationName": "DetectLang",
+  "contactFormType": "ContactForm",
+  "userId": "123",
+  "subject": "test1",
+  "fullName": "test1",
+  "email": "test1@test.com",
+  "message": "test1"
+}
+
+Response:
+{
+    "contactFormId": 2
+}
+
+2. Get contact form
+
+Method: Get
+
+Url: https://localhost:44324/api/ContactFrom/get?FromDate=01-12-2020
+
+Response:
+[
+    {
+        "id": 2,
+        "contactFormType": "ContactForm         ",
+        "applicationName": "DetectLang          ",
+        "userId": "123                 ",
+        "createdDate": "2021-01-01T23:07:32.13",
+        "contactFormDetails": [
+            {
+                "id": 1,
+                "contactFormId": 2,
+                "fullName": "test1                         ",
+                "email": "test1@test.com                ",
+                "subjeсt": "test1                         ",
+                "message": "test1",
+                "createDate": "2021-01-01T23:07:32.27"
+            }
+        ]
+    }
+]
