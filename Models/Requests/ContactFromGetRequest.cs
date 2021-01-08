@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ContactForm.Microservice.Models.Requests
+namespace Form.Microservice.Models.Requests
 {
     public class ContactFromGetRequest
     {

@@ -6,12 +6,12 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using ContactForm.Microservice.Models;
+using Form.Microservice.Models;
 using Helper.Microservice;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Authentication;
 
-namespace ContactForm.Microservice.Extensions
+namespace Form.Microservice.Extensions
 {
     public static class ExceptionMiddlewareExtension
     {

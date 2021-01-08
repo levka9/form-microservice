@@ -1,4 +1,4 @@
-using ContactForm.Microservice.Entities.Context;
+using Form.Microservice.Entities.Context;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -12,9 +12,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using ContactForm.Microservice.Modules;
+using Form.Microservice.Modules;
 using Newtonsoft.Json;
-using ContactForm.Microservice.Extensions;
+using Form.Microservice.Extensions;
 
 namespace ContactForm.Microservice
 {
@@ -30,10 +30,26 @@ namespace ContactForm.Microservice
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ContactFormContext>(options =>
-                options.UseSqlServer(Configuration.GetSection("ConnectionString:Prod").Value));
+            services.AddDbContext<FormContext>(options =>
+            {
+#if DEBUG
+                options.UseSqlServer(Configuration.GetSection("ConnectionString:Dev").Value);
+#else
+                options.UseSqlServer(Configuration.GetSection("ConnectionString:Prod").Value);
+#endif
+            });
 
             services.AddTransient<IContactFormModule, ContactFormModule>();
+
+            services.AddFluentEmail(Configuration.GetSection("EmailSender:DefaultFrom").Value)
+                    .AddSendGridSender(Configuration.GetSection("EmailSender:SendGridApiKey").Value);
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowOrigin", builder => builder.AllowAnyOrigin()
+                                                                   .AllowAnyHeader()
+                                                                   .AllowAnyMethod());
+            });
 
             services.AddControllers()
                     .AddNewtonsoftJson(options => 
@@ -56,6 +72,8 @@ namespace ContactForm.Microservice
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseCors("AllowOrigin");
 
             app.UseEndpoints(endpoints =>
             {

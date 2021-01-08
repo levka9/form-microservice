@@ -1,0 +1,123 @@
+﻿USE [F:\MICROSERVICES\FORM.MICROSERVICE\LOCALDB\FORM.MDF]
+GO
+/****** Object:  Table [dbo].[Form]    Script Date: 08/01/2021 18:29:48 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Form](
+	[Id] [bigint] IDENTITY(1,1) NOT NULL,
+	[FormTypeId] [tinyint] NOT NULL,
+	[ApplicationName] [varchar](20) NOT NULL,
+	[UserId] [varchar](20) NULL,
+	[CreatedDate] [datetime2](7) NOT NULL,
+ CONSTRAINT [PK_Form] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[FormDetails]    Script Date: 08/01/2021 18:29:48 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[FormDetails](
+	[Id] [bigint] IDENTITY(1,1) NOT NULL,
+	[FormId] [bigint] NOT NULL,
+	[AnswerFormDetailsId] [bigint] NULL,
+	[FieldName] [nvarchar](30) NULL,
+	[FieldValue] [nvarchar](max) NULL,
+	[CreateDate] [datetime] NOT NULL,
+ CONSTRAINT [PK_FormDetails] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[FormType]    Script Date: 08/01/2021 18:29:48 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[FormType](
+	[Id] [tinyint] IDENTITY(1,1) NOT NULL,
+	[Type] [varchar](30) NOT NULL,
+	[Description] [varchar](200) NULL,
+	[CreateDate] [datetime] NOT NULL,
+ CONSTRAINT [PK_FormType] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[Form] ON 
+GO
+INSERT [dbo].[Form] ([Id], [FormTypeId], [ApplicationName], [UserId], [CreatedDate]) VALUES (4, 1, N'DetectLang', N'123', CAST(N'2021-01-08T16:29:38.2966667' AS DateTime2))
+GO
+INSERT [dbo].[Form] ([Id], [FormTypeId], [ApplicationName], [UserId], [CreatedDate]) VALUES (5, 1, N'DetectLang', N'123', CAST(N'2021-01-08T16:35:31.0600000' AS DateTime2))
+GO
+INSERT [dbo].[Form] ([Id], [FormTypeId], [ApplicationName], [UserId], [CreatedDate]) VALUES (6, 1, N'DetectLang', N'123', CAST(N'2021-01-08T18:15:45.6000000' AS DateTime2))
+GO
+INSERT [dbo].[Form] ([Id], [FormTypeId], [ApplicationName], [UserId], [CreatedDate]) VALUES (7, 1, N'DetectLang', N'123', CAST(N'2021-01-08T18:27:45.3566667' AS DateTime2))
+GO
+SET IDENTITY_INSERT [dbo].[Form] OFF
+GO
+SET IDENTITY_INSERT [dbo].[FormDetails] ON 
+GO
+INSERT [dbo].[FormDetails] ([Id], [FormId], [AnswerFormDetailsId], [FieldName], [FieldValue], [CreateDate]) VALUES (1, 4, NULL, N'Message', N'test1', CAST(N'2021-01-08T16:29:38.380' AS DateTime))
+GO
+INSERT [dbo].[FormDetails] ([Id], [FormId], [AnswerFormDetailsId], [FieldName], [FieldValue], [CreateDate]) VALUES (2, 5, NULL, NULL, NULL, CAST(N'2021-01-08T16:35:31.237' AS DateTime))
+GO
+INSERT [dbo].[FormDetails] ([Id], [FormId], [AnswerFormDetailsId], [FieldName], [FieldValue], [CreateDate]) VALUES (3, 5, NULL, N'Subject', N'test2', CAST(N'2021-01-08T16:35:31.237' AS DateTime))
+GO
+INSERT [dbo].[FormDetails] ([Id], [FormId], [AnswerFormDetailsId], [FieldName], [FieldValue], [CreateDate]) VALUES (4, 5, NULL, N'Email', N'test2@test.com', CAST(N'2021-01-08T16:35:31.237' AS DateTime))
+GO
+INSERT [dbo].[FormDetails] ([Id], [FormId], [AnswerFormDetailsId], [FieldName], [FieldValue], [CreateDate]) VALUES (5, 5, NULL, N'FullName', N'test2', CAST(N'2021-01-08T16:35:31.237' AS DateTime))
+GO
+INSERT [dbo].[FormDetails] ([Id], [FormId], [AnswerFormDetailsId], [FieldName], [FieldValue], [CreateDate]) VALUES (6, 5, NULL, N'Message', N'test2', CAST(N'2021-01-08T16:35:31.237' AS DateTime))
+GO
+INSERT [dbo].[FormDetails] ([Id], [FormId], [AnswerFormDetailsId], [FieldName], [FieldValue], [CreateDate]) VALUES (7, 6, NULL, N'Subject', N'test2', CAST(N'2021-01-08T18:15:45.740' AS DateTime))
+GO
+INSERT [dbo].[FormDetails] ([Id], [FormId], [AnswerFormDetailsId], [FieldName], [FieldValue], [CreateDate]) VALUES (8, 6, NULL, N'Email', N'test2@test.com', CAST(N'2021-01-08T18:15:45.740' AS DateTime))
+GO
+INSERT [dbo].[FormDetails] ([Id], [FormId], [AnswerFormDetailsId], [FieldName], [FieldValue], [CreateDate]) VALUES (9, 6, NULL, N'FullName', N'test2', CAST(N'2021-01-08T18:15:45.740' AS DateTime))
+GO
+INSERT [dbo].[FormDetails] ([Id], [FormId], [AnswerFormDetailsId], [FieldName], [FieldValue], [CreateDate]) VALUES (10, 6, NULL, N'Message', N'test2', CAST(N'2021-01-08T18:15:45.740' AS DateTime))
+GO
+INSERT [dbo].[FormDetails] ([Id], [FormId], [AnswerFormDetailsId], [FieldName], [FieldValue], [CreateDate]) VALUES (11, 7, NULL, N'Subject', N'test2', CAST(N'2021-01-08T18:27:45.373' AS DateTime))
+GO
+INSERT [dbo].[FormDetails] ([Id], [FormId], [AnswerFormDetailsId], [FieldName], [FieldValue], [CreateDate]) VALUES (12, 7, NULL, N'Email', N'test2@test.com', CAST(N'2021-01-08T18:27:45.373' AS DateTime))
+GO
+INSERT [dbo].[FormDetails] ([Id], [FormId], [AnswerFormDetailsId], [FieldName], [FieldValue], [CreateDate]) VALUES (13, 7, NULL, N'FullName', N'test2', CAST(N'2021-01-08T18:27:45.373' AS DateTime))
+GO
+INSERT [dbo].[FormDetails] ([Id], [FormId], [AnswerFormDetailsId], [FieldName], [FieldValue], [CreateDate]) VALUES (14, 7, NULL, N'Message', N'test2', CAST(N'2021-01-08T18:27:45.373' AS DateTime))
+GO
+SET IDENTITY_INSERT [dbo].[FormDetails] OFF
+GO
+SET IDENTITY_INSERT [dbo].[FormType] ON 
+GO
+INSERT [dbo].[FormType] ([Id], [Type], [Description], [CreateDate]) VALUES (1, N'Contact', NULL, CAST(N'2021-01-08T15:45:17.630' AS DateTime))
+GO
+INSERT [dbo].[FormType] ([Id], [Type], [Description], [CreateDate]) VALUES (2, N'Support', NULL, CAST(N'2021-01-08T15:45:22.123' AS DateTime))
+GO
+SET IDENTITY_INSERT [dbo].[FormType] OFF
+GO
+ALTER TABLE [dbo].[Form] ADD  CONSTRAINT [DF_Form_CreatedDate]  DEFAULT (getdate()) FOR [CreatedDate]
+GO
+ALTER TABLE [dbo].[FormDetails] ADD  CONSTRAINT [DF_FormDetails_CreateDate]  DEFAULT (getdate()) FOR [CreateDate]
+GO
+ALTER TABLE [dbo].[FormType] ADD  CONSTRAINT [DF_FormType_CreateDate]  DEFAULT (getdate()) FOR [CreateDate]
+GO
+ALTER TABLE [dbo].[Form]  WITH CHECK ADD  CONSTRAINT [FK_Form_FormType] FOREIGN KEY([FormTypeId])
+REFERENCES [dbo].[FormType] ([Id])
+GO
+ALTER TABLE [dbo].[Form] CHECK CONSTRAINT [FK_Form_FormType]
+GO
+ALTER TABLE [dbo].[FormDetails]  WITH CHECK ADD  CONSTRAINT [FK_FormDetails_Form] FOREIGN KEY([FormId])
+REFERENCES [dbo].[Form] ([Id])
+GO
+ALTER TABLE [dbo].[FormDetails] CHECK CONSTRAINT [FK_FormDetails_Form]
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'ContactForm, SupportForm' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Form', @level2type=N'COLUMN',@level2name=N'FormTypeId'
+GO

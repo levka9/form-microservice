@@ -1,41 +1,41 @@
-﻿using ContactForm.Microservice.Entities.Context;
-using ContactForm.Microservice.Models.Requests;
+﻿using Form.Microservice.Entities.Context;
+using Form.Microservice.Models.Requests;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
-namespace ContactForm.Microservice.Modules
+namespace Form.Microservice.Modules
 {
     public class ContactFormModule : IContactFormModule
     {
         #region Properties
         static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        ContactFormContext context;
+        FormContext context;
         #endregion
 
-        public ContactFormModule(ContactFormContext Context)
+        public ContactFormModule(FormContext Context)
         {
             context = Context;
         }
 
-        public async Task<IEnumerable<Entities.ContactForm>> GetAsync(byte LastCount)
+        public async Task<IEnumerable<Entities.Form>> GetAsync(byte LastCount)
         {
-            var query = $"SELECT TOP {LastCount} * FROM ContactForm ORDER BY CreatedDate DESC";
+            var query = $"SELECT TOP {LastCount} * FROM Form ORDER BY CreatedDate DESC";
 
-            var lstContactForm = await context.Set<Entities.ContactForm>().FromSqlRaw(query)
-                                                                          .Include(x => x.ContactFormDetails)                                                                        
-                                                                          .ToListAsync();
+            var lstContactForm = await context.Set<Entities.Form>().FromSqlRaw(query)
+                                                                   .Include(x => x.FormDetails)                                                                        
+                                                                   .ToListAsync();
 
             return lstContactForm;
         }
 
-        public async Task<IEnumerable<Entities.ContactForm>> GetAsync(ContactFromGetRequest Request)
+        public async Task<IEnumerable<Entities.Form>> GetAsync(ContactFromGetRequest Request)
         {
-            var contactFormQuery = context.Set<Entities.ContactForm>().AsQueryable();
+            var contactFormQuery = context.Set<Entities.Form>().AsQueryable();
 
-            var lstContactForm  = await contactFormQuery.Include(x => x.ContactFormDetails)
+            var lstContactForm  = await contactFormQuery.Include(x => x.FormDetails)
                                                         .Where(x => x.CreatedDate >= Request.FromDate &&
                                                                    (Request.ToDate == null || x.CreatedDate <= Request.ToDate))
                                                         .ToListAsync();            
@@ -46,29 +46,37 @@ namespace ContactForm.Microservice.Modules
         {
             var contactForm = MapData(Request);
 
-            context.Set<Entities.ContactForm>().Add(contactForm);
+            context.Set<Entities.Form>().Add(contactForm);
             await context.SaveChangesAsync();
 
             return contactForm.Id;
         }
 
-        private Entities.ContactForm MapData(ContactFormSendRequest Request)
+        private Entities.Form MapData(ContactFormSendRequest Request)
         {
-            var contactForm = new Entities.ContactForm();
-            var contactFormDetails = new Entities.ContactFormDetails();
+            var contactForm = new Entities.Form();
+            
             contactForm.ApplicationName = Request.ApplicationName;
-            contactForm.ContactFormType = Request.ContactFormType;
-            contactForm.ContactFormType = Request.ContactFormType;
+            contactForm.FormTypeId = (byte)Request.FormType;
             contactForm.UserId = Request.UserId;
-            contactFormDetails.Email = Request.Email;
-            contactFormDetails.FullName = Request.FullName;
-            contactFormDetails.Message = Request.Message;
-            contactFormDetails.Subjeсt = Request.Subject;
 
-            contactForm.ContactFormDetails = new List<Entities.ContactFormDetails>();
-            contactForm.ContactFormDetails.Add(contactFormDetails);
+            contactForm.FormDetails = new List<Entities.FormDetails>();
+            
+            this.AddNewField(contactForm, nameof(Request.Subject), Request.Subject);
+            this.AddNewField(contactForm, nameof(Request.Email), Request.Email);
+            this.AddNewField(contactForm, nameof(Request.FullName), Request.FullName);
+            this.AddNewField(contactForm, nameof(Request.Message), Request.Message);
 
             return contactForm;
+        }
+
+        private void AddNewField(Entities.Form ContactForm, string FieldName, string FieldValue)
+        {
+            var contactFormDetails = new Entities.FormDetails();
+            contactFormDetails.FieldName = FieldName;
+            contactFormDetails.FieldValue = FieldValue;
+
+            ContactForm.FormDetails.Add(contactFormDetails);
         }
     }
 }

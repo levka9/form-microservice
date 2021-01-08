@@ -7,7 +7,7 @@ Url: https://localhost:44324/api/ContactFrom/Send
 Body:
 {
   "applicationName": "DetectLang",
-  "contactFormType": "ContactForm",
+  "formType": 1,
   "userId": "123",
   "subject": "test1",
   "fullName": "test1",

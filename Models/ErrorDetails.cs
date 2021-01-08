@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ContactForm.Microservice.Models
+namespace Form.Microservice.Models
 {
     public class ErrorDetails
     {

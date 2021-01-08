@@ -1,6 +1,7 @@
-﻿using ContactForm.Microservice.Entities.Context;
-using ContactForm.Microservice.Models.Requests;
-using ContactForm.Microservice.Modules;
+﻿using Form.Microservice.Entities.Context;
+using Form.Microservice.Models.Requests;
+using Form.Microservice.Modules;
+using FluentEmail.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -8,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ContactForm.Microservice.Controllers
+namespace Form.Microservice.Controllers
 {
     [ApiController]
     [Route("api/[controller]/[action]")]
@@ -22,13 +23,24 @@ namespace ContactForm.Microservice.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Entities.ContactForm>> Get([FromQuery] ContactFromGetRequest Request)
+        public async Task<IActionResult> SendTestEmail()
+        {
+            var email = await Email.From("levkir222@email.com")
+                                   .To("levkir@gmail.com", "bob")
+                                   .Subject("hows it going bob")
+                                   .Body("yo bob, long time no see!")
+                                .SendAsync();
+            return Ok(email.MessageId);
+        }
+
+        [HttpGet]
+        public async Task<IEnumerable<Form.Microservice.Entities.Form>> Get([FromQuery] ContactFromGetRequest Request)
         {
             return await contactFormModule.GetAsync(Request);
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Entities.ContactForm>> GetLastN([FromQuery] byte LastCount)
+        public async Task<IEnumerable<Form.Microservice.Entities.Form>> GetLastN([FromQuery] byte LastCount)
         {
             return await contactFormModule.GetAsync(LastCount);
         }
