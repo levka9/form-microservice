@@ -15,6 +15,10 @@ using Microsoft.EntityFrameworkCore;
 using Form.Microservice.Modules;
 using Newtonsoft.Json;
 using Form.Microservice.Extensions;
+using log4net;
+using System.Reflection;
+using System.IO;
+using log4net.Config;
 
 namespace ContactForm.Microservice
 {
@@ -30,9 +34,6 @@ namespace ContactForm.Microservice
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
-            XmlConfigurator.Configure(logRepository, new FileInfo("log4net.config"));
-
             services.AddDbContext<FormContext>(options =>
             {
 #if DEBUG
@@ -69,7 +70,10 @@ namespace ContactForm.Microservice
                 app.UseDeveloperExceptionPage();
             }
             app.ConfigureExceptionHandler();
-            
+
+            var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
+            XmlConfigurator.Configure(logRepository, new FileInfo("log4net.config"));
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
